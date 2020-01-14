@@ -1,0 +1,48 @@
+package cn.ztuo.bitrade.entity;
+
+import cn.ztuo.bitrade.constant.AuditStatus;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+
+import javax.persistence.*;
+import java.util.Date;
+
+/**
+ * 意见反馈
+ *
+ * @author GS
+ * @date 2018年03月19日
+ */
+@Entity
+@Data
+public class Feedback {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    private Long id;
+    @CreationTimestamp
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date createTime;
+    private AuditStatus status;
+    private String remark;
+    /**
+     * 审核意见
+     * */
+    private String opinion;
+
+    /**
+     * 联系方式
+     * */
+    private String contact;
+    /**
+     * 反馈者
+     */
+    @JoinColumn(name = "member_id",nullable = false)
+    @ManyToOne
+    private Member member;
+
+    /**
+     * 图片路径 多张,分隔
+     */
+    private String pictureUrl;
+}
